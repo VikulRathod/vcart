@@ -10,10 +10,13 @@ namespace vcart.UI.Controllers
     {
         IConfiguration _configuration;
         IPaymentService _paymentService;
-        public PaymentController(IConfiguration configuration, IPaymentService paymentService)
+        IOrderService _orderService;
+        public PaymentController(IConfiguration configuration,
+            IPaymentService paymentService, IOrderService orderService)
         {
             _configuration = configuration;
             _paymentService = paymentService;
+            _orderService = orderService;
         }
         public IActionResult Index()
         {
@@ -77,6 +80,23 @@ namespace vcart.UI.Controllers
                             AddressModel address = TempData.Get<AddressModel>("Address");
 
                             TempData.Set("PaymentDetails", model);
+
+                            // save order to database
+
+                            Order order = new Order()
+                            {
+                                Id = orderId,
+                                UserId = CurrentUser.Id,
+                                PaymentId = paymentId,
+                                Street = address.Street,
+                                ZipCode = address.ZipCode,
+                                City = address.City,
+                                Locality = address.Locality,
+                                PhoneNumber = CurrentUser.PhoneNumber,
+                                CreatedDate = DateTime.Now
+                            };
+                            _orderService.Add(order);
+
                             return RedirectToAction("Receipt");
                         }
                     }

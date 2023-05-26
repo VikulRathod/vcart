@@ -14,7 +14,7 @@ namespace vcart.Repositories.Implementations
         }
         public UserRepository(AppDbContext db) : base(db)
         {
-           // dbContext = db;
+            // dbContext = db;
         }
 
         public bool CreateUser(User user, string Role)
@@ -22,7 +22,7 @@ namespace vcart.Repositories.Implementations
             try
             {
                 Role role = dbContext.Roles.Where(r => r.Name == Role).FirstOrDefault();
-                if(role != null)
+                if (role != null)
                 {
                     user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password); //hashing
                     user.Roles.Add(role);
@@ -33,18 +33,18 @@ namespace vcart.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                
+
             }
             return false;
         }
 
         public UserModel ValidateUser(string Email, string Password)
         {
-            User user = dbContext.Users.Include(u=>u.Roles).Where(u => u.Email == Email).FirstOrDefault();
+            User user = dbContext.Users.Include(u => u.Roles).Where(u => u.Email == Email).FirstOrDefault();
             if (user != null)
             {
                 bool isVerified = BCrypt.Net.BCrypt.Verify(Password, user.Password);
-                if(isVerified)
+                if (isVerified)
                 {
                     UserModel model = new UserModel
                     {
@@ -52,7 +52,7 @@ namespace vcart.Repositories.Implementations
                         Name = user.Name,
                         Email = user.Email,
                         PhoneNumber = user.PhoneNumber,
-                        Roles = user.Roles.Select(r=>r.Name).ToArray()
+                        Roles = user.Roles.Select(r => r.Name).ToArray()
                     };
                     return model;
                 }

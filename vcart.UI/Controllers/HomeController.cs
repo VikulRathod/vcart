@@ -25,7 +25,7 @@ namespace vcart.UI.Controllers
             //key
 
             string key = "catalog";
-            _cache.Remove(key);
+            // _cache.Remove(key); // uncomment only if debug the flow
             var items = _cache.GetOrCreate(key, entry =>
             {
                 entry.AbsoluteExpiration = DateTime.Now.AddHours(12);
