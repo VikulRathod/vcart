@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using vcart.Core.Entities;
+using vcart.Repositories.Implementations;
 
-namespace vcart.Services.Interfaces
+namespace vcart.Repositories.Interfaces
 {
-    public interface IOrderService : IService<Order>
+    public interface IOrderItemRepository : IRepository<OrderItem>
     {
-        Order GetOrderDetailWithItem(string id);
     }
 }

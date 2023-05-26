@@ -7,8 +7,7 @@ using vcart.Core.Entities;
 
 namespace vcart.Services.Interfaces
 {
-    public interface IOrderService : IService<Order>
+    public interface IOrderItemService : IService<OrderItem>
     {
-        Order GetOrderDetailWithItem(string id);
     }
 }

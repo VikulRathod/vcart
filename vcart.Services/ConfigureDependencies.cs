@@ -30,6 +30,7 @@ namespace vcart.Services
             services.AddScoped<IRepository<CartItem>, Repository<CartItem>>();
             services.AddScoped<IRepository<PaymentDetail>, Repository<PaymentDetail>>();
             services.AddScoped<IRepository<Order>, Repository<Order>>();
+            services.AddScoped<IRepository<OrderItem>, Repository<OrderItem>>();
 
 
             services.AddScoped<ICartRepository, CartRepository>();
@@ -37,12 +38,14 @@ namespace vcart.Services
             //services
             services.AddScoped<IService<Item>, Service<Item>>();
             services.AddScoped<IService<Order>, Service<Order>>();
+            services.AddScoped<IService<OrderItem>, Service<OrderItem>>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderItemService, OrderItemService>();
         }
     }
 }

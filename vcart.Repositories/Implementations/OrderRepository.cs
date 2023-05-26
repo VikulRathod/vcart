@@ -21,5 +21,11 @@ namespace vcart.Repositories.Implementations
         {
 
         }
+
+        public Order GetOrderDetailWithItem(string id)
+        {
+            return dbContext.Orders.Include(o => o.OrderItems).
+                Where(i => i.Id == id).FirstOrDefault();
+        }
     }
 }

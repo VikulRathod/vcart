@@ -11,12 +11,14 @@ namespace vcart.UI.Controllers
         IConfiguration _configuration;
         IPaymentService _paymentService;
         IOrderService _orderService;
+        IOrderItemService _orderItemService;
         public PaymentController(IConfiguration configuration,
-            IPaymentService paymentService, IOrderService orderService)
+            IPaymentService paymentService, IOrderService orderService, IOrderItemService orderItemService)
         {
             _configuration = configuration;
             _paymentService = paymentService;
             _orderService = orderService;
+            _orderItemService = orderItemService;
         }
         public IActionResult Index()
         {
@@ -96,6 +98,21 @@ namespace vcart.UI.Controllers
                                 CreatedDate = DateTime.Now
                             };
                             _orderService.Add(order);
+
+                            // save all corresponding order items to db
+
+                            List<OrderItem> orderItems =
+                                cart.Items.Select(i => new OrderItem()
+                                {
+                                    OrderId = orderId,
+                                    ItemId = i.ItemId,
+                                    Quantity = i.Quantity,
+                                    UnitPrice = i.UnitPrice,
+                                    Total = i.Total
+                                }).ToList();
+
+                            orderItems?.ForEach(oi =>
+                            _orderItemService.Add(oi));
 
                             return RedirectToAction("Receipt");
                         }

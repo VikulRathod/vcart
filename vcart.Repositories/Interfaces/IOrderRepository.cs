@@ -9,5 +9,6 @@ namespace vcart.Repositories.Interfaces
 {
     public interface IOrderRepository : IRepository<Order>
     {
+        Order GetOrderDetailWithItem(string id);
     }
 }
