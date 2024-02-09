@@ -12,7 +12,8 @@ namespace vcart.UI.Controllers
         private readonly ILogger<HomeController> _logger;
         IItemService _itemService;
         private IMemoryCache _cache;
-        public HomeController(ILogger<HomeController> logger, IItemService itemService, IMemoryCache cache)
+        public HomeController(ILogger<HomeController> logger, 
+            IItemService itemService, IMemoryCache cache)
         {
             _logger = logger;
             _itemService = itemService;
@@ -51,7 +52,7 @@ namespace vcart.UI.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.Any, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
